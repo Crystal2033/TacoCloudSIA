@@ -47,31 +47,32 @@ public class DesignTacoController {
             model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
         }
     }
+
     @ModelAttribute(name = "tacoOrder")
-    public TacoOrder order(){
+    public TacoOrder order() {
         return new TacoOrder();
     }
 
     @ModelAttribute("taco")
-    public Taco taco(){
+    public Taco taco() {
         return new Taco();
     }
 
     @GetMapping
-    public String showDesignForm(){
+    public String showDesignForm() {
         log.debug("showing info with get method");
         return "design";
     }
 
-    private Iterable<Ingredient> filterByType(List<Ingredient> ingredients, Type type){
+    private Iterable<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
         return ingredients.stream()
-                .filter(ingredient-> ingredient.getType().equals(type))
+                .filter(ingredient -> ingredient.getType().equals(type))
                 .collect(Collectors.toList());
     }
 
     @PostMapping
-    public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder){
-        if(errors.hasErrors()){
+    public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder) {
+        if (errors.hasErrors()) {
             return "design";
         }
         tacoOrder.addTaco(taco);
