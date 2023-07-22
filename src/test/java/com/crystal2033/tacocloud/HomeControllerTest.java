@@ -1,6 +1,6 @@
 package com.crystal2033.tacocloud;
 
-import com.crystal2033.tacocloud.controllers.HomeController;
+import com.crystal2033.tacocloud.controllers.WebConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -20,7 +20,7 @@ import static
  * ©Crystal2033
  * @date 08/07/2023
  */
-@WebMvcTest(HomeController.class)
+@WebMvcTest(WebConfig.class)
 public class HomeControllerTest {
     @Autowired
     private MockMvc mockMvc;
