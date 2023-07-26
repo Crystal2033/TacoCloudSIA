@@ -1,17 +1,14 @@
 package com.crystal2033.tacocloud.repository;
 
 import com.crystal2033.tacocloud.models.Ingredient;
-
-import java.util.Optional;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * @project TacoCloud
  * ©Crystal2033
  * @date 22/07/2023
  */
-public interface IngredientRepository {
-    Iterable<Ingredient> findAll();
-    Optional<Ingredient> findById(String id);
-
-    Ingredient save(Ingredient ingredient);
+@Repository
+public interface IngredientRepository extends CrudRepository<Ingredient, String> {
 }

@@ -1,11 +1,14 @@
 package com.crystal2033.tacocloud.models;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
+import org.springframework.data.relational.core.mapping.Table;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,10 +19,16 @@ import java.util.List;
  * @date 11/07/2023
  */
 @Data
-public class TacoOrder {
+@Entity
+public class TacoOrder implements Serializable {
 
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Date placedAt;
+    private Date placedAt = new Date();
 
     @NotBlank(message = "Delivery name is required")
     private String deliveryName;
@@ -43,6 +52,8 @@ public class TacoOrder {
 
     @Digits(integer = 3, fraction = 0, message = "Invalid CVV")
     private String ccCVV;
+
+    @OneToMany(cascade = CascadeType.ALL)
     private final List<Taco> tacos = new ArrayList<>();
     public void addTaco(Taco taco) {
         tacos.add(taco);
