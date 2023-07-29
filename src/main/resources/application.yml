@@ -1,4 +1,21 @@
+#spring:
+#  datasource:
+#    generate-unique-name: false
+#    name: tacocloud
+#spring:
+#  data:
+#  cassandra:
+#  keyspace-name: taco_cloud
+#  schema-action: recreate
+#  local-datacenter: datacenter1
+#  username: taco_cloud_crystal
+#  password: qwerty123
+
 spring:
-  datasource:
-    generate-unique-name: false
-    name: tacocloud
+  data:
+    mongodb:
+      host: mongodb.tacocloud.com
+      port: 27017
+      username: tacocloud
+      password: qwerty
+      database: tacoclouddb
