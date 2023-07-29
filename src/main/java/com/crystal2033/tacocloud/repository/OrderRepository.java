@@ -8,5 +8,5 @@ import org.springframework.data.repository.CrudRepository;
  * ©Crystal2033
  * @date 22/07/2023
  */
-public interface OrderRepository extends CrudRepository<TacoOrder, String> {
+public interface OrderRepository extends CrudRepository<TacoOrder, Long> {
 }
