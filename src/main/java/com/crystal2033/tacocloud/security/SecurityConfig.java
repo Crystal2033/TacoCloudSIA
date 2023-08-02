@@ -4,18 +4,13 @@ import com.crystal2033.tacocloud.models.User;
 import com.crystal2033.tacocloud.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import org.springframework.security.web.SecurityFilterChain;
 
 /**
  * @project TacoCloud
@@ -26,7 +21,7 @@ import java.util.Optional;
 @Configuration
 public class SecurityConfig {
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -34,7 +29,43 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService(UserRepository userRepository) {
         return username -> {
             User user = userRepository.findByUsername(username);
-            return Optional.of(user).orElseThrow(()->new UsernameNotFoundException("User " + username + " not found"));
+            if (user != null) return user;
+            throw new UsernameNotFoundException("User ‘" + username + "’ not found");
+            //return Optional.of(user).orElseThrow(()->new UsernameNotFoundException("User " + username + " not found"));
         };
     }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(authorizeHttpRequest -> {
+                    authorizeHttpRequest
+                            .requestMatchers("/design", "/orders").hasRole("USER")
+                            .requestMatchers("/", "/**").permitAll()
+                            .anyRequest().authenticated();
+                })
+                .csrf(csrf->{
+                    csrf.disable();
+                })
+                .headers(headers ->{
+                    headers.frameOptions(options -> {
+                        options.disable();
+                    });
+                })
+                .formLogin(form -> {
+                    form.loginPage("/login").defaultSuccessUrl("/design");
+                })
+                .oauth2Login(login -> {
+                    login.loginPage("/login");
+                })
+                .logout(logout -> {
+                    logout.logoutSuccessUrl("/");
+                });
+        return http.build();
+    }
+
+//    public void configure(WebSecurity web) throws Exception {
+//        web
+//                .ignoring()
+//                .requestMatchers("/h2-console/**");
+//    }
 }
