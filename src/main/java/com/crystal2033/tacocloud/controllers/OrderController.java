@@ -7,6 +7,7 @@ import com.crystal2033.tacocloud.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,12 +46,11 @@ public class OrderController {
     @PostMapping
     public String processOrder(@Valid TacoOrder order, Errors errors,
                                SessionStatus sessionStatus,
-                               Authentication authentication) {
+                               @AuthenticationPrincipal User user) {
         if (errors.hasErrors()) {
             return "orderForm";
         }
 
-       User user = (User) authentication.getPrincipal();
         order.setUser(user);
         //log.info("Order submitted: {}", order);
         orderRepository.save(order);
