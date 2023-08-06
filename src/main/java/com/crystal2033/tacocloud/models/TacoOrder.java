@@ -2,6 +2,7 @@ package com.crystal2033.tacocloud.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
@@ -56,6 +57,8 @@ public class TacoOrder implements Serializable {
     @OneToMany
     private final List<Taco> tacos = new ArrayList<>();
 
+    @ManyToOne
+    private User user;
     public void addTaco(Taco taco) {
         tacos.add(taco);
     }
