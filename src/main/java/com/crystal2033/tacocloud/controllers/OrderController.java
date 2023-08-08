@@ -5,8 +5,8 @@ import com.crystal2033.tacocloud.models.User;
 import com.crystal2033.tacocloud.repository.OrderRepository;
 import com.crystal2033.tacocloud.repository.UserRepository;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import java.security.Principal;
-
 /**
  * @project TacoCloud
  * ©Crystal2033
@@ -25,6 +23,7 @@ import java.security.Principal;
  */
 
 @Controller
+@RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/orders")
 @SessionAttributes("tacoOrder")
@@ -33,10 +32,6 @@ public class OrderController {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
 
-    public OrderController(OrderRepository orderRepository, UserRepository userRepository) {
-        this.orderRepository = orderRepository;
-        this.userRepository = userRepository;
-    }
 
     @GetMapping("/current")
     public String orderForm() {

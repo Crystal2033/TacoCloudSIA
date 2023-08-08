@@ -6,6 +6,7 @@ import com.crystal2033.tacocloud.models.Taco;
 import com.crystal2033.tacocloud.models.TacoOrder;
 import com.crystal2033.tacocloud.repository.IngredientRepository;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
  */
 
 @Controller
+@RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/design")
 @SessionAttributes("tacoOrder")
@@ -30,9 +32,6 @@ public class DesignTacoController {
 
     private final IngredientRepository ingredientRepository;
 
-    public DesignTacoController(IngredientRepository ingredientRepository) {
-        this.ingredientRepository = ingredientRepository;
-    }
 
     @ModelAttribute
     public void addIngredientsToModel(Model model) {

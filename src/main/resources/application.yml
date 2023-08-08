@@ -11,3 +11,17 @@ spring:
             clientSecret: <github client secret>
             scope:  email, public_profile
 
+logging:
+#  file:
+#    path: D:\Paul\Programming\Java\SpringInAction\logs
+#    file: TacoCloud.log
+  level:
+    root: info
+    org.springframework.security: info
+
+server:
+  port: 8443
+  ssl:
+    key-store: ..\KeyStore\mykeys.jks
+    key-store-password: qwerty123
+    key-password: qwerty123

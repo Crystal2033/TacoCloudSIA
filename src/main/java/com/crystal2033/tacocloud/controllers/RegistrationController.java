@@ -2,6 +2,8 @@ package com.crystal2033.tacocloud.controllers;
 
 import com.crystal2033.tacocloud.models.RegistrationForm;
 import com.crystal2033.tacocloud.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -17,15 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/register")
 public class RegistrationController {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    public RegistrationController(UserRepository userRepository, PasswordEncoder passwordEncoder){
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @GetMapping
     public String registerForm(){

@@ -1,6 +1,6 @@
 package com.crystal2033.tacocloud.repository;
-import com.crystal2033.tacocloud.models.User;
 
+import com.crystal2033.tacocloud.models.User;
 import org.springframework.data.repository.CrudRepository;
 
 /**
