@@ -1,6 +1,6 @@
 package com.crystal2033.tacocloud;
 
-import com.crystal2033.tacocloud.controllers.WebConfig;
+import com.crystal2033.tacocloud.configurations.WebConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

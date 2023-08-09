@@ -25,3 +25,6 @@ server:
     key-store: ..\KeyStore\mykeys.jks
     key-store-password: qwerty123
     key-password: qwerty123
+taco:
+  orders:
+    page-size: 20
