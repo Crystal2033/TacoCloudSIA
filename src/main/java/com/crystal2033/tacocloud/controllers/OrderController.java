@@ -6,6 +6,7 @@ import com.crystal2033.tacocloud.models.User;
 import com.crystal2033.tacocloud.repository.OrderRepository;
 import com.crystal2033.tacocloud.repository.UserRepository;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.data.domain.PageRequest;
@@ -29,18 +30,13 @@ import org.springframework.web.bind.support.SessionStatus;
 @Slf4j
 @RequestMapping("/orders")
 @SessionAttributes("tacoOrder")
+@RequiredArgsConstructor
 public class OrderController {
 
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
 
     private final OrderControllerProps orderControllerProps;
-
-    public OrderController(OrderRepository orderRepository, UserRepository userRepository, OrderControllerProps orderControllerProps) {
-        this.orderRepository = orderRepository;
-        this.userRepository = userRepository;
-        this.orderControllerProps = orderControllerProps;
-    }
 
 
     @GetMapping("/current")

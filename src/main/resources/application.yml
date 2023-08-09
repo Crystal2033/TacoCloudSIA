@@ -1,3 +1,4 @@
+# default data in profile: each profile has these data
 spring:
   datasource:
     generate-unique-name: false
@@ -12,9 +13,6 @@ spring:
             scope:  email, public_profile
 
 logging:
-#  file:
-#    path: D:\Paul\Programming\Java\SpringInAction\logs
-#    file: TacoCloud.log
   level:
     root: info
     org.springframework.security: info
@@ -25,6 +23,32 @@ server:
     key-store: ..\KeyStore\mykeys.jks
     key-store-password: qwerty123
     key-password: qwerty123
+
 taco:
   orders:
     page-size: 30
+
+---
+# If we want to change profile (override properties) we have to go Run->Edit configurations-> Set environment variable:
+# Like: SPRING_PROFILES_ACTIVE=<profile_name> or use export SPRING_PROFILES_ACTIVE=<profile_name> for Linux.
+#Or set SPRING_PROFILES_ACTIVE=<profile_name> (not working, better to use Intellij IDEA)
+spring:
+  config:
+    activate:
+      on-profile:
+        prod
+logging:
+  level:
+    root: info
+
+server:
+  port: 9090
+
+---
+spring:
+  config:
+    activate:
+      on-profile:
+        testing
+server:
+  port: 9091
