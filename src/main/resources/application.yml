@@ -27,4 +27,4 @@ server:
     key-password: qwerty123
 taco:
   orders:
-    page-size: 20
+    page-size: 30
