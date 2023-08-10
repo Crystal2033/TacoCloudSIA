@@ -17,12 +17,12 @@ logging:
     root: info
     org.springframework.security: info
 
-server:
-  port: 8443
-  ssl:
-    key-store: ..\KeyStore\mykeys.jks
-    key-store-password: qwerty123
-    key-password: qwerty123
+#server:
+#  port: 8443
+#  ssl:
+#    key-store: ..\KeyStore\mykeys.jks
+#    key-store-password: qwerty123
+#    key-password: qwerty123
 
 taco:
   orders:
