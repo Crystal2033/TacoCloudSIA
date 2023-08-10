@@ -2,8 +2,13 @@ package com.crystal2033.tacocloud.restapi;
 
 import com.crystal2033.tacocloud.models.TacoOrder;
 import com.crystal2033.tacocloud.repository.OrderRepository;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * @project TacoCloud
@@ -23,10 +28,11 @@ public class TacoOrderController {
     @PutMapping(path = "/{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public TacoOrder putOrder(@PathVariable("orderId") Long id, @RequestBody TacoOrder order) {
         order.setId(id);
-        return orderRepository.save(order);
+        return order;
     }
 
     @PatchMapping(path = "/{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Transactional
     public TacoOrder patchOrder(@PathVariable("orderId") Long id, @RequestBody TacoOrder patchOrder) {
 
         TacoOrder order = orderRepository.findById(id).get();
@@ -54,6 +60,7 @@ public class TacoOrderController {
         if (patchOrder.getCcCVV() != null) {
             order.setCcCVV(patchOrder.getCcCVV());
         }
-        return orderRepository.save(order);
+        return order;
+        //return orderRepository.save(order);
     }
 }

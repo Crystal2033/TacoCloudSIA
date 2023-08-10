@@ -3,7 +3,9 @@ package com.crystal2033.tacocloud.configurations;
 import com.crystal2033.tacocloud.models.Ingredient;
 import com.crystal2033.tacocloud.models.Taco;
 import com.crystal2033.tacocloud.models.Ingredient.Type;
+import com.crystal2033.tacocloud.models.TacoOrder;
 import com.crystal2033.tacocloud.repository.IngredientRepository;
+import com.crystal2033.tacocloud.repository.OrderRepository;
 import com.crystal2033.tacocloud.repository.TacoRepository;
 import com.crystal2033.tacocloud.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -51,7 +53,8 @@ public class WebConfig implements WebMvcConfigurer {
     public CommandLineRunner dataLoaderRest(IngredientRepository repo,
                                             UserRepository userRepo,
                                             PasswordEncoder passwordEncoder,
-                                            TacoRepository tacoRepository) { //ApplicationRunner содержит не String ..., а ApplicationArguments -- класс для работы с аргументами КомСтроки
+                                            TacoRepository tacoRepository,
+                                            OrderRepository orderRepository) { //ApplicationRunner содержит не String ..., а ApplicationArguments -- класс для работы с аргументами КомСтроки
         return args -> {
 
 
@@ -90,19 +93,46 @@ public class WebConfig implements WebMvcConfigurer {
             taco1.setIngredients(Arrays.asList(
                     flourTortilla, groundBeef, carnitas,
                     sourCream, salsa, cheddar));
-            tacoRepository.save(taco1);
+
+
             Taco taco2 = new Taco();
             taco2.setName("Bovine Bounty");
             taco2.setIngredients(Arrays.asList(
                     cornTortilla, groundBeef, cheddar,
                     jack, sourCream));
-            tacoRepository.save(taco2);
+
             Taco taco3 = new Taco();
             taco3.setName("Veg-Out");
             taco3.setIngredients(Arrays.asList(
                     flourTortilla, cornTortilla, tomatoes,
                     lettuce, salsa));
+
+
+            TacoOrder order1 = new TacoOrder();
+            order1.addTaco(taco1);
+            order1.addTaco(taco2);
+            initOrderValues(order1);
+            orderRepository.save(order1);
+
+
+            TacoOrder order2 = new TacoOrder();
+            order2.addTaco(taco3);
+            initOrderValues(order2);
+            orderRepository.save(order2);
+
+            tacoRepository.save(taco1);
+            tacoRepository.save(taco2);
             tacoRepository.save(taco3);
         };
+    }
+    public void initOrderValues(TacoOrder order){
+        order.setCcCVV("123");
+        order.setCcExpiration("02/23");
+        order.setDeliveryCity("Moscow");
+        order.setDeliveryName("DeliveryName");
+        order.setDeliveryState("Ru");
+        order.setDeliveryStreet("Chertanovo");
+        order.setDeliveryZip("1234124");
+
     }
 }
