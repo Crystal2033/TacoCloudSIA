@@ -30,8 +30,8 @@ taco:
 
 ---
 # If we want to change profile (override properties) we have to go Run->Edit configurations-> Set environment variable:
-# Like: SPRING_PROFILES_ACTIVE=<profile_name> or use export SPRING_PROFILES_ACTIVE=<profile_name> for Linux.
-#Or set SPRING_PROFILES_ACTIVE=<profile_name> (not working, better to use Intellij IDEA)
+# SPRING_PROFILES_ACTIVE=<profile_name> or use export SPRING_PROFILES_ACTIVE=<profile_name> for Linux.
+#Or set SPRING_PROFILES_ACTIVE=<profile_name> for Windows (not working, better to use Intellij IDEA)
 spring:
   config:
     activate:

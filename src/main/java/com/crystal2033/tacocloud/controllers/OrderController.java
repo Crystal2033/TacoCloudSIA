@@ -8,7 +8,6 @@ import com.crystal2033.tacocloud.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -53,14 +52,13 @@ public class OrderController {
         }
 
         order.setUser(user);
-        //log.info("Order submitted: {}", order);
         orderRepository.save(order);
         sessionStatus.setComplete();
         return "redirect:/";
     }
 
     @GetMapping
-    public String ordersForUser(@AuthenticationPrincipal User user, Model model){
+    public String ordersForUser(@AuthenticationPrincipal User user, Model model) {
         Pageable pageable = PageRequest.of(0, orderControllerProps.getPageSize());
         model.addAttribute("orders", orderRepository.findByUserOrderByPlacedAtDesc(user, pageable));
         return "orderList";

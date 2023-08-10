@@ -4,10 +4,8 @@ import com.crystal2033.tacocloud.models.User;
 import com.crystal2033.tacocloud.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -46,10 +44,10 @@ public class SecurityConfig {
                             .requestMatchers("/", "/**").permitAll()
                             .anyRequest().authenticated();
                 })
-                .csrf(csrf->{
+                .csrf(csrf -> {
                     csrf.disable();
                 })
-                .headers(headers ->{
+                .headers(headers -> {
                     headers.frameOptions(options -> {
                         options.disable();
                     });

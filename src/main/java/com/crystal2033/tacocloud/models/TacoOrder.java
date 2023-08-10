@@ -57,6 +57,7 @@ public class TacoOrder implements Serializable {
 
     @ManyToOne
     private User user;
+
     public void addTaco(Taco taco) {
         tacos.add(taco);
     }

@@ -3,9 +3,9 @@ package com.crystal2033.tacocloud.configurations;
 import com.crystal2033.tacocloud.models.Ingredient;
 import com.crystal2033.tacocloud.repository.IngredientRepository;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -18,13 +18,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     @Override
-    public void addViewControllers(ViewControllerRegistry registry){
+    public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("home");
         registry.addViewController("/login");
     }
 
     @Bean
-    public CommandLineRunner dataLoader(IngredientRepository repo){ //ApplicationRunner содержит не String ..., а ApplicationArguments -- класс для работы с аргументами КомСтроки
+    @Profile("dev")
+    public CommandLineRunner dataLoader(IngredientRepository repo) { //ApplicationRunner содержит не String ..., а ApplicationArguments -- класс для работы с аргументами КомСтроки
         return args -> {
             repo.save(new Ingredient("FLTO", "Flour Tortilla", Ingredient.Type.WRAP));
             repo.save(new Ingredient("COTO", "Corn Tortilla", Ingredient.Type.WRAP));
