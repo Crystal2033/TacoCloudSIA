@@ -11,11 +11,15 @@ spring:
             clientId: <github client id>
             clientSecret: <github client secret>
             scope:  email, public_profile
+  data:
+    rest:
+      base-path: /data-api
 
 logging:
   level:
     root: info
     org.springframework.security: info
+
 
 #server:
 #  port: 8443
