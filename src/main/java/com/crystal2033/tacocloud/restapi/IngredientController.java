@@ -25,25 +25,25 @@ public class IngredientController {
     }
 
     @GetMapping
-    public Iterable<Ingredient> allIngredients(){
+    public Iterable<Ingredient> allIngredients() {
         return ingredientRepository.findAll();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Ingredient createIngredient(@RequestBody Ingredient ingredient){
+    public Ingredient createIngredient(@RequestBody Ingredient ingredient) {
         return ingredientRepository.save(ingredient);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteIngredient(@PathVariable("id") String ingredientId){
+    public void deleteIngredient(@PathVariable("id") String ingredientId) {
         ingredientRepository.deleteById(ingredientId);
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteIngredient(@RequestBody Ingredient ingredient){
+    public void deleteIngredient(@RequestBody Ingredient ingredient) {
         ingredientRepository.delete(ingredient);
     }
 }

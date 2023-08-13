@@ -4,6 +4,8 @@ import com.crystal2033.tacocloud.models.User;
 import com.crystal2033.tacocloud.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableMethodSecurity //for @PreAuthorize("hasRole('ADMIN')")
-public class SecurityConfig {
+public class SecurityConfig{
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -41,17 +43,22 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorizeHttpRequest -> {
                     authorizeHttpRequest
                             .requestMatchers("/design", "/orders").hasRole("USER")
-                            .requestMatchers("/", "/**").permitAll()
+//                            .requestMatchers("/", "/**").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/api/ingredients")
+                            .hasAuthority("SCOPE_writeIngredients")
+                            .requestMatchers(HttpMethod.DELETE, "/api/ingredients")
+                            .hasAuthority("SCOPE_deleteIngredients")
                             .anyRequest().authenticated();
                 })
-                .csrf(csrf -> {
-                    csrf.disable();
-                })
-                .headers(headers -> {
-                    headers.frameOptions(options -> {
-                        options.disable();
-                    });
-                })
+                .oauth2ResourceServer(oauth2-> oauth2.jwt(Customizer.withDefaults()))
+//                .csrf(csrf -> {
+//                    csrf.disable();
+//                })
+//                .headers(headers -> {
+//                    headers.frameOptions(options -> {
+//                        options.disable();
+//                    });
+//                })
                 .formLogin(form -> {
                     form.loginPage("/login").defaultSuccessUrl("/design");
                 })
@@ -64,9 +71,4 @@ public class SecurityConfig {
         return http.build();
     }
 
-//    public void configure(WebSecurity web) throws Exception {
-//        web
-//                .ignoring()
-//                .requestMatchers("/h2-console/**");
-//    }
 }
